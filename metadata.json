@@ -1,0 +1,6 @@
+{
+  "name": "우리들의 공간 - 2학년 2반 대시보드",
+  "description": "시간표, 오늘 급식, 학급 알림장, 칭찬 한마디 등 2학년 2반 친구들을 위한 소통 및 학급 생활 대시보드입니다.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
