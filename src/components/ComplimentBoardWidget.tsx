@@ -6,20 +6,20 @@
 import React, { useState } from 'react';
 import { Compliment } from '../types';
 import { INITIAL_COMPLIMENTS } from '../utils/mockData';
-import { Heart, Send, Sparkles, Smile, Trash2 } from 'lucide-react';
+import { ThumbsUp, Send, Megaphone, Sparkles, Trash2, HelpCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function ComplimentBoardWidget() {
   const [compliments, setCompliments] = useState<Compliment[]>(() => {
-    const saved = localStorage.getItem('class_compliments');
+    const saved = localStorage.getItem('class_petitions');
     return saved ? JSON.parse(saved) : INITIAL_COMPLIMENTS;
   });
 
   const [content, setContent] = useState('');
   const [color, setColor] = useState<'yellow' | 'purple' | 'green' | 'pink' | 'blue'>('yellow');
-  const [selectedEmoji, setSelectedEmoji] = useState('🍀');
+  const [selectedEmoji, setSelectedEmoji] = useState('📢');
 
-  const emojis = ['🍀', '💖', '😇', '⚽', '🧪', '🎉', '💯', '🍰', '😺', '🌟'];
+  const emojis = ['📢', '🔥', '💬', '💡', '📌', '🍀', '💖', '🎉', '🌟', '⚠️'];
 
   const postItColors = {
     yellow: { bg: 'bg-amber-100 border-amber-250 text-amber-900', hover: 'hover:bg-amber-150', accent: 'bg-amber-200' },
@@ -34,7 +34,7 @@ export default function ComplimentBoardWidget() {
     if (!content.trim()) return;
 
     if (content.length > 80) {
-      alert('칭찬 한마디는 80자 이내로 입력해 주세요!');
+      alert('청원 내용은 80자 이내로 입력해 주세요!');
       return;
     }
 
@@ -49,11 +49,11 @@ export default function ComplimentBoardWidget() {
 
     const updated = [newCompliment, ...compliments];
     setCompliments(updated);
-    localStorage.setItem('class_compliments', JSON.stringify(updated));
+    localStorage.setItem('class_petitions', JSON.stringify(updated));
 
     // Reset fields
     setContent('');
-    setSelectedEmoji('🍀');
+    setSelectedEmoji('📢');
   };
 
   const handleLike = (id: string, e: React.MouseEvent) => {
@@ -65,26 +65,26 @@ export default function ComplimentBoardWidget() {
       return c;
     });
     setCompliments(updated);
-    localStorage.setItem('class_compliments', JSON.stringify(updated));
+    localStorage.setItem('class_petitions', JSON.stringify(updated));
   };
 
   const handleDelete = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     const filtered = compliments.filter(c => c.id !== id);
     setCompliments(filtered);
-    localStorage.setItem('class_compliments', JSON.stringify(filtered));
+    localStorage.setItem('class_petitions', JSON.stringify(filtered));
   };
 
   return (
     <div id="compliment-card" className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-5">
         <div className="flex items-center gap-2.5">
-          <div className="bg-amber-50 text-amber-500 p-2 rounded-xl">
-            <Sparkles className="w-5 h-5 fill-amber-100" />
+          <div className="bg-indigo-50 text-indigo-500 p-2 rounded-xl">
+            <Megaphone className="w-5 h-5 text-[#5c85d6]" />
           </div>
           <div>
-            <h2 className="font-bold text-lg text-slate-800">칭찬 한마디 (응원 게시판)</h2>
-            <p className="text-xs text-slate-400 mt-0.5">2반 친구들에게 소소한 고마움과 응원을 전해 보아요</p>
+            <h2 className="font-bold text-lg text-slate-800">청원게시판</h2>
+            <p className="text-xs text-slate-400 mt-0.5">우리 반을 위한 건의사항이나 필요한 안건을 자유롭게 남겨보아요</p>
           </div>
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function ComplimentBoardWidget() {
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="친구 칭찬이나 따뜻한 응원을 80자 이내로 적어보세요! (예: 민재야 오늘 지우개 건네줘서 땡큐)"
+              placeholder="학급에 바라는 점이나 건의하고 싶은 청원을 80자 이내로 자유롭게 적어보세요!"
               required
               maxLength={80}
               rows={2}
@@ -159,7 +159,7 @@ export default function ComplimentBoardWidget() {
             style={{ backgroundColor: '#5c85d6' }}
           >
             <Send className="w-3.5 h-3.5" />
-            보내기
+            청원하기
           </button>
         </div>
       </form>
@@ -192,18 +192,18 @@ export default function ComplimentBoardWidget() {
                     <button
                       onClick={(e) => handleDelete(comp.id, e)}
                       className="opacity-0 group-hover:opacity-100 p-1 text-slate-500 hover:text-rose-700 hover:bg-white/40 rounded-lg transition-all"
-                      title="메모 삭제"
+                      title="청원 삭제"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
-                  {/* 칭찬 글귀 */}
+                  {/* 청원 글귀 */}
                   <p className="text-xs leading-relaxed font-medium break-all flex-1 whitespace-pre-wrap">
                     {comp.content}
                   </p>
 
-                  {/* 하단 좋아요 & 생성시각 */}
+                  {/* 하단 동의 & 생성시각 */}
                   <div className="flex justify-between items-center pt-2.5 mt-2.5 border-t border-black/5">
                     <span className="text-[9px] opacity-60">
                       {new Date(comp.createdAt).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
@@ -211,10 +211,10 @@ export default function ComplimentBoardWidget() {
 
                     <button
                       onClick={(e) => handleLike(comp.id, e)}
-                      className="flex items-center gap-1.5 p-1 px-2 text-[11px] font-bold rounded-full bg-white/75 hover:bg-white shadow-2xs transition-transform active:scale-115 border border-black/5"
+                      className="flex items-center gap-1.5 p-1 px-2.5 text-[10px] font-bold rounded-full bg-white/75 hover:bg-white shadow-2xs transition-transform active:scale-115 border border-black/5"
                     >
-                      <Heart className={`w-3.5 h-3.5 text-rose-500 ${comp.likes > 0 ? 'fill-rose-500' : ''}`} />
-                      <span>{comp.likes}</span>
+                      <ThumbsUp className={`w-3 h-3 text-blue-600 ${comp.likes > 0 ? 'fill-blue-600/30' : ''}`} />
+                      <span>동의 {comp.likes}</span>
                     </button>
                   </div>
                 </motion.div>
@@ -222,9 +222,9 @@ export default function ComplimentBoardWidget() {
             })
           ) : (
             <div className="col-span-1 sm:col-span-2 text-center py-16 text-slate-400">
-              <Smile className="w-10 h-10 mx-auto mb-2 opacity-50" />
-              <p className="text-xs font-semibold">아직 도착한 칭찬 쪽지가 없어요.</p>
-              <p className="text-[10px] opacity-70 mt-1">용기 내어 첫 칭찬 포스트잇을 전해보세요!</p>
+              <HelpCircle className="w-10 h-10 mx-auto mb-2 opacity-50" />
+              <p className="text-xs font-semibold">아직 등록된 청원이 없어요.</p>
+              <p className="text-[10px] opacity-70 mt-1">우리 반을 위한 첫 번째 청원을 등록해 보세요!</p>
             </div>
           )}
         </AnimatePresence>

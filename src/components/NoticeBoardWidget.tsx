@@ -27,11 +27,9 @@ export default function NoticeBoardWidget() {
   const [isPinned, setIsPinned] = useState(false);
 
   const handleDelete = (id: string) => {
-    if (window.confirm('이 알림사항을 삭제하시겠습니까?')) {
-      const filtered = notices.filter(n => n.id !== id);
-      setNotices(filtered);
-      localStorage.setItem('class_notices', JSON.stringify(filtered));
-    }
+    const filtered = notices.filter(n => n.id !== id);
+    setNotices(filtered);
+    localStorage.setItem('class_notices', JSON.stringify(filtered));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -305,10 +303,10 @@ export default function NoticeBoardWidget() {
 
                   <button
                     onClick={() => handleDelete(notice.id)}
-                    className="opacity-0 group-hover:opacity-150 p-1 text-slate-300 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
+                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all"
                     title="알림 지우기"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>

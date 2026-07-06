@@ -95,43 +95,35 @@ export const INITIAL_NOTICES: Notice[] = [
 export const INITIAL_COMPLIMENTS: Compliment[] = [
   {
     id: 'c1',
-    content: '오늘 민우가 급식 먹고 우리 테이블에 쏟아진 국물 아무 말 없이 휴지로 다 닦아주더라... 진짜 천사 아닐 리 없음 ㅠㅠ 고마워!',
-    createdAt: '2026-06-11T12:40:00Z',
+    content: '체육 시간 직후에 에어컨 온도를 조금 더 시원하게 가동할 수 있도록 건의합니다! 교실이 너무 더워서 수업 집중이 안 돼요 ㅠㅠ',
+    createdAt: '2026-07-06T10:40:00Z',
     color: 'yellow',
-    emoji: '😇',
-    likes: 8
+    emoji: '🔥',
+    likes: 18
   },
   {
     id: 'c2',
-    content: '이번 체육시간 피구할 때 지훈이 구원 든든했다 ㅎㅎ 몸 날려서 공 막아줘서 덕분에 이김! 역시 2반 스포츠맨 👍',
-    createdAt: '2026-06-11T11:15:00Z',
+    content: '수요일 청소 시간 단축 및 자치 조례를 5분 일찍 종료하는 안건을 청원합니다. 하교 길 학원 버스 배차 시간이 너무 빡빡합니다!',
+    createdAt: '2026-07-06T09:15:00Z',
     color: 'blue',
-    emoji: '⚽',
-    likes: 5
+    emoji: '📢',
+    likes: 14
   },
   {
     id: 'c3',
-    content: '영어 수행평가 관련해서 질문 많았는데 반장이 아주 상냥하게 단톡방에 가이드 라인 다시 공유해줘서 도움 많이 됐어요 땡큐!!',
-    createdAt: '2026-06-10T09:30:00Z',
+    content: '교실 뒤편 분리수거함 옆에 소형 빗자루와 쓰레받기를 상시 비치해 주셨으면 좋겠습니다. 먼지가 너무 잘 쌓여요.',
+    createdAt: '2026-07-05T14:30:00Z',
     color: 'green',
-    emoji: '💖',
-    likes: 12
+    emoji: '📌',
+    likes: 9
   },
   {
     id: 'c4',
-    content: '다들 내일 모의고사 긴장하지 말고 평소처럼 잘 보자!! 우리 2반 친구들 찍는 것마다 다 정답으로 통하길 💯 화이팅!',
-    createdAt: '2026-06-10T08:10:00Z',
+    content: '비가 올 때 복도가 많이 미끄럽습니다. 교실 앞뒤 문턱에 미끄럼 방지 패드나 매트를 깔아줄 것을 건의합니다!',
+    createdAt: '2026-07-05T08:10:00Z',
     color: 'pink',
-    emoji: '🍀',
-    likes: 15
-  },
-  {
-    id: 'c5',
-    content: '화학 실험 시간에 플라스크 씻는 거 까먹고 그냥 갈 뻔했는데 챙겨준 혜원이 짱짱걸',
-    createdAt: '2026-06-09T16:22:00Z',
-    color: 'purple',
-    emoji: '🧪',
-    likes: 4
+    emoji: '☔',
+    likes: 11
   }
 ];
 
@@ -154,15 +146,16 @@ export const INITIAL_SCHEDULE: ScheduleItem[] = [
 ];
 
 export const INITIAL_POLL: ClassPoll = {
-  id: 'p1',
-  question: '🔥 기말고사 끝난 당일 학급 단체 단합 대회, 어디로 가는 게 좋을까요?',
+  id: 'p_sportsday',
+  question: '🏆 스포츠데이 상금으로 무엇을 먹을까요?',
   options: [
-    { id: 'o1', text: '🎤 코인노래방 & 떡볶이 뷔페', votes: 14 },
-    { id: 'o2', text: '🎳 추억의 볼링장 & 시원한 피자', votes: 9 },
-    { id: 'o3', text: '🎮 PC방 3시간 대여 & 짜장면', votes: 6 },
-    { id: 'o4', text: '🏡 그냥 끝나자마자 칼같이 귀가하기', votes: 3 },
+    { id: 'o1', text: '1. 떡볶이', votes: 15 },
+    { id: 'o2', text: '2. 피자', votes: 11 },
+    { id: 'o3', text: '3. 사과', votes: 2 },
+    { id: 'o4', text: '4. 주스', votes: 4 },
+    { id: 'o5', text: '5. 치킨', votes: 13 },
   ],
-  totalVotes: 32,
+  totalVotes: 45,
   hasVoted: false
 };
 

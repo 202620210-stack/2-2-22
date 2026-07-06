@@ -6,19 +6,14 @@
 import React, { useState } from 'react';
 import { ClassPoll, PollOption } from '../types';
 import { INITIAL_POLL } from '../utils/mockData';
-import { BarChart3, HelpCircle, Gift, Sparkles, RefreshCw, Trophy, Users } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { BarChart3, RefreshCw, Users } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export default function ClassPollWidget() {
   const [poll, setPoll] = useState<ClassPoll>(() => {
-    const saved = localStorage.getItem('class_poll');
+    const saved = localStorage.getItem('class_poll_sportsday');
     return saved ? JSON.parse(saved) : INITIAL_POLL;
   });
-
-  // State for lucky number drawer
-  const [luckyNum, setLuckyNum] = useState<number | null>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [fortuneText, setFortuneText] = useState('');
 
   // Handle vote registration
   const handleVote = (optionId: string) => {
@@ -40,7 +35,7 @@ export default function ClassPollWidget() {
     };
 
     setPoll(nextPoll);
-    localStorage.setItem('class_poll', JSON.stringify(nextPoll));
+    localStorage.setItem('class_poll_sportsday', JSON.stringify(nextPoll));
   };
 
   // Revoke/Reset vote to test other answers
@@ -63,51 +58,7 @@ export default function ClassPollWidget() {
     };
 
     setPoll(nextPoll);
-    localStorage.setItem('class_poll', JSON.stringify(nextPoll));
-  };
-
-  // Run the lucky number drawing lotto
-  const handleDrawLuckyNumber = () => {
-    if (isDrawing) return;
-    
-    setIsDrawing(true);
-    setLuckyNum(null);
-    setFortuneText('');
-
-    let ticksCount = 0;
-    const intervalTime = 80; // milliseconds
-    const maxTicks = 18;
-
-    const fortunes = [
-      '🎉 오늘 급식실 1등 입장 하이패스 기운이 감돌고 있습니다!',
-      '📚 오늘 5교시 영어 시간에 선생님의 질문 세례를 기막히게 피해갈 행운아!',
-      '🌸 아침에 등교할 때 버스나 신호등 대기 없이 1초 컷으로 들어올 행운의 주인공!',
-      '💖 오늘 하루 온 2반 친구들이 네 말에 100% 공감해주고 리액션 보장해줌!',
-      '🍀 오늘 매점 갔을 때 평소 좋아하던 주스/소시지 마지막 수량이 네 손에 들림!',
-      '🧪 오늘 과학 수행 평가에서 소수점 보정 럭키 보너스를 듬뿍 탈 운세를 가짐!',
-      '⚽ 오늘 체육 시간 대항구에서 슈팅하는 족족 상대 진영 골망을 흔들 대천재!',
-      '🌟 혹시라도 사물함 자물쇠 번호나 가방 비밀번호 잊어버려도 바로 풀릴 신비한 촉!'
-    ];
-
-    const interval = setInterval(() => {
-      // Class num range: typically 1 to 30 in Korea
-      const tempNum = Math.floor(Math.random() * 30) + 1;
-      setLuckyNum(tempNum);
-      ticksCount++;
-
-      if (ticksCount >= maxTicks) {
-        clearInterval(interval);
-        
-        // Finalize number and associate a fortune
-        const finalNum = Math.floor(Math.random() * 30) + 1;
-        setLuckyNum(finalNum);
-        
-        // Match fortune according to final number index to keep it deterministic but fun
-        const fortuneIdx = finalNum % fortunes.length;
-        setFortuneText(fortunes[fortuneIdx]);
-        setIsDrawing(false);
-      }
-    }, intervalTime);
+    localStorage.setItem('class_poll_sportsday', JSON.stringify(nextPoll));
   };
 
   return (
@@ -197,81 +148,6 @@ export default function ClassPollWidget() {
             </span>
             <span>민주 학급 자치 규정 준수 🕊️</span>
           </div>
-        </div>
-      </div>
-
-      {/* 2. 오늘의 행운 추첨회 */}
-      <div>
-        <div className="flex items-center justify-between pb-3.5 mb-4">
-          <div className="flex items-center gap-2">
-            <div className="bg-amber-50 text-amber-600 p-2 rounded-xl">
-              <Gift className="w-4.5 h-4.5 text-[#55b399]" />
-            </div>
-            <div>
-              <h3 className="font-bold text-sm text-slate-800">오늘의 럭키 행운 추첨</h3>
-              <p className="text-[11px] text-slate-400">오늘 기분 좋은 행운을 탈 2학년 2반의 등번호는?</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-gradient-to-br from-slate-50 to-slate-100/50 p-4 border border-slate-150-0 rounded-2xl flex flex-col md:flex-row items-center justify-around gap-4">
-          
-          {/* 번호판 룰렛 애니메이션 */}
-          <div className="relative shrink-0 flex items-center justify-center">
-            <div className="w-20 h-20 rounded-2xl bg-white border border-slate-200 flex items-center justify-center shadow-sm relative overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-1.5 bg-indigo-250" style={{ backgroundColor: '#5c85d6' }} />
-              
-              <AnimatePresence mode="popLayout">
-                <motion.span
-                  key={luckyNum || 'ready'}
-                  initial={{ y: isDrawing ? 15 : 0, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: isDrawing ? -15 : 0, opacity: 0 }}
-                  transition={{ duration: 0.08 }}
-                  className="text-2xl font-black font-mono text-slate-800"
-                >
-                  {luckyNum ? `${luckyNum}번` : '✨'}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-          </div>
-
-          {/* 설명 및 추첨 버튼 */}
-          <div className="flex-1 text-center md:text-left space-y-2">
-            {luckyNum && fortuneText ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-1"
-              >
-                <div className="text-[11px] font-extrabold text-blue-700 flex items-center gap-1 justify-center md:justify-start">
-                  <Trophy className="w-3.5 h-3.5 animate-bounce text-amber-500 fill-amber-500" />
-                  당첨 등번호: {luckyNum}번 친구 축하해요!
-                </div>
-                <p className="text-xs text-slate-600 leading-normal font-semibold">
-                  {fortuneText}
-                </p>
-              </motion.div>
-            ) : (
-              <div>
-                <p className="text-xs text-slate-600 font-bold">등교 전, 기분 전환을 위한 럭키 박스를 열어보세요!</p>
-                <p className="text-[10px] text-slate-400 mt-1">번호 추첨을 돌려 오늘의 행운 한마디를 받아가세요.</p>
-              </div>
-            )}
-
-            <div className="pt-1.5 flex justify-center md:justify-start">
-              <button
-                onClick={handleDrawLuckyNumber}
-                disabled={isDrawing}
-                className="p-2 px-4 rounded-xl text-xs font-bold text-white shadow-xs hover:shadow-md flex items-center gap-1.5 disabled:opacity-50 active:scale-95 transition-all"
-                style={{ backgroundColor: '#55b399' }}
-              >
-                <Sparkles className="w-4 h-4 animate-spin-slow text-amber-100" />
-                {isDrawing ? '번호 셔플 중...' : '번호 추첨하기'}
-              </button>
-            </div>
-          </div>
-
         </div>
       </div>
 

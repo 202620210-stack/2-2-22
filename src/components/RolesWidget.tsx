@@ -29,11 +29,9 @@ export default function RolesWidget() {
   const [editAssigned, setEditAssigned] = useState('');
 
   const handleDelete = (id: string) => {
-    if (window.confirm('이 1인 1역 보직을 삭제하시겠습니까?')) {
-      const filtered = roles.filter(r => r.id !== id);
-      setRoles(filtered);
-      localStorage.setItem('class_roles', JSON.stringify(filtered));
-    }
+    const filtered = roles.filter(r => r.id !== id);
+    setRoles(filtered);
+    localStorage.setItem('class_roles', JSON.stringify(filtered));
   };
 
   const handleStartEdit = (role: ClassRole) => {
@@ -95,15 +93,13 @@ export default function RolesWidget() {
       '하성진', '박은우', '서유진', '남궁현', '도민재', '배주한', '송혜교', '유아인', '윤도현', '정우성'
     ];
     
-    if (window.confirm('기존 보직을 제외하고, 미지정 인원들에게 임의로 소소한 1인 1역을 자동 매칭해 볼까요? (체험 기능)')) {
-      const shuffledNames = [...typicalStudents].sort(() => Math.random() - 0.5);
-      const updated = roles.map((role, idx) => ({
-        ...role,
-        assignedTo: shuffledNames[idx % shuffledNames.length]
-      }));
-      setRoles(updated);
-      localStorage.setItem('class_roles', JSON.stringify(updated));
-    }
+    const shuffledNames = [...typicalStudents].sort(() => Math.random() - 0.5);
+    const updated = roles.map((role, idx) => ({
+      ...role,
+      assignedTo: shuffledNames[idx % shuffledNames.length]
+    }));
+    setRoles(updated);
+    localStorage.setItem('class_roles', JSON.stringify(updated));
   };
 
   return (
@@ -293,20 +289,20 @@ export default function RolesWidget() {
 
             {/* 에디션 삭제 트리거 */}
             {editingId !== role.id && (
-              <div className="opacity-0 group-hover:opacity-100 absolute top-1 right-1 flex gap-0.5 items-center bg-white/90 p-1 rounded-lg shadow-sm border border-slate-100 transition-all">
+              <div className="absolute top-1 right-1 flex gap-1 items-center bg-white/90 p-1.5 rounded-lg shadow-2xs border border-slate-100 transition-all">
                 <button
                   onClick={() => handleStartEdit(role)}
                   className="p-1 text-slate-400 hover:text-blue-600 hover:bg-slate-100 rounded-md transition-colors"
                   title="역할 편집"
                 >
-                  <Edit2 className="w-3 h-3" />
+                  <Edit2 className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={() => handleDelete(role.id)}
                   className="p-1 text-slate-400 hover:text-rose-600 hover:bg-slate-100 rounded-md transition-colors"
                   title="역할 삭제"
                 >
-                  <Trash2 className="w-3 h-3" />
+                  <Trash2 className="w-3.5 h-3.5" />
                 </button>
               </div>
             )}

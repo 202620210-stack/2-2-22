@@ -25,11 +25,9 @@ export default function ScheduleWidget({ currentTime }: ScheduleWidgetProps) {
   const [type, setType] = useState<'시험' | '행사' | '학습' | '휴일'>('학습');
 
   const handleDelete = (id: string) => {
-    if (window.confirm('이 일정을 학급 캘린더에서 제거할까요?')) {
-      const filtered = schedules.filter(s => s.id !== id);
-      setSchedules(filtered);
-      localStorage.setItem('class_schedules', JSON.stringify(filtered));
-    }
+    const filtered = schedules.filter(s => s.id !== id);
+    setSchedules(filtered);
+    localStorage.setItem('class_schedules', JSON.stringify(filtered));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -240,10 +238,10 @@ export default function ScheduleWidget({ currentTime }: ScheduleWidgetProps) {
 
                 <button
                   onClick={() => handleDelete(item.id)}
-                  className="opacity-0 group-hover:opacity-100 p-0.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-all"
+                  className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-all"
                   title="일정 삭제"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
             </motion.div>
